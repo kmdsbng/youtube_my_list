@@ -5,7 +5,8 @@
     %title #{@account}のリスト
   %body
     .main
-      .title #{@account}のリスト
+      %h1.title #{@account}のリスト
+      %h2 再生リスト
       %dl
       - @entries.each do |e|
         %dt
