@@ -1,8 +1,7 @@
-#!/usr/local/bin/ruby -I /home/kmdsbng/lib/ruby -I /home/kmdsbng/local/lib
-ENV['GEM_HOME'] = '/home/kmdsbng/local/lib/ruby/gems'
+#!/usr/local/bin/ruby
 $:.unshift File.dirname(__FILE__) + '/lib'
-  
-require '/home/kmdsbng/local/lib/rubygems'
+
+require 'rubygems'
 require 'sinatra/base'
 require File.dirname(__FILE__) + '/patch/patch_all'
 require 'starwars_formatter'
@@ -14,10 +13,6 @@ class MyApp < Sinatra::Base
   end
 
   get '' do
-    haml :index
-  end
-
-  get '/' do
     haml :index
   end
 

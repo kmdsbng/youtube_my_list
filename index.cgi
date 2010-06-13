@@ -1,5 +1,6 @@
-#!/usr/local/bin/ruby -I /home/kmdsbng/lib/ruby -I /home/kmdsbng/local/lib
-ENV['GEM_HOME'] = '/home/kmdsbng/local/lib/ruby/gems'
+#!/usr/local/bin/ruby
+
+require File.join(File.dirname(__FILE__), 'environment')
 
 begin
   require File.dirname(__FILE__) + '/youtube'
