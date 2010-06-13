@@ -1,0 +1,4 @@
+$: << '/home/kmdsbng/lib/ruby'
+$: << '/home/kmdsbng/local/lib'
+ENV['GEM_HOME'] = '/home/kmdsbng/local/lib/ruby/gems'
+
