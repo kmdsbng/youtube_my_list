@@ -28,11 +28,12 @@ class YoutubeLoader
     }
   end
 
-  def load_playlist(account)
-    url = "http://gdata.youtube.com/feeds/api/playlists/#{CGI.escapeHTML(account)}"
+  def load_playlist(playlist_id)
+    url = "http://gdata.youtube.com/feeds/api/playlists/#{CGI.escapeHTML(playlist_id)}"
     doc = @content_loader.load_xml(url)
     entry_nodes = doc.xpath(%{//xmlns:entry})
-    convert_to_playlist_entry(doc, entry_nodes)
+    title = doc.xpath(%{/xmlns:feed/xmlns:title})[0].text
+    [title, convert_to_playlist_entry(doc, entry_nodes)]
   end
 
   def convert_to_playlist_entry(doc, nodes)

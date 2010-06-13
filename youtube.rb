@@ -30,6 +30,13 @@ class MyApp < Sinatra::Base
     haml :dashboard
   end
 
+  get '/playlist/:account/:playlist_id/' do
+    @account = params[:account]
+    @playlist_id = params[:playlist_id]
+    @title, @entries = YoutubeLoader.new.load_playlist(@playlist_id)
+    haml :playlist
+  end
+
   error do
     require 'pp'
     x = env['sinatra.error']
