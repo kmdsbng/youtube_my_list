@@ -23,10 +23,12 @@ class MyApp < Sinatra::Base
     show_top_page
   end
 
-  get '/dashboard/:account' do
-    haml :account
+  get '/dashboard' do
+    @account = params[:account]
+    url = "http://gdata.youtube.com/feeds/api/users/#{h @account}/playlists"
+    @entries = [:a, :b, :c]
+    haml :dashboard
   end
-
 
   error do
     require 'pp'
