@@ -4,6 +4,7 @@ $:.unshift File.dirname(__FILE__) + '/lib'
 require 'rubygems'
 require 'sinatra/base'
 require File.dirname(__FILE__) + '/patch/patch_all'
+require 'content_loader'
 
 class MyApp < Sinatra::Base
   helpers do
@@ -25,7 +26,7 @@ class MyApp < Sinatra::Base
   get '/dashboard' do
     @account = params[:account]
     url = "http://gdata.youtube.com/feeds/api/users/#{h @account}/playlists"
-    #data = 
+    data = ContentLoader.load_xml(url)
     @entries = [1, 2, 3]
     haml :dashboard
   end
