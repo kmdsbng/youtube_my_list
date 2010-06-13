@@ -8,5 +8,7 @@
       .title #{@account}のリスト
       %br
       - @entries.each do |e|
-        %p= e
+        %p= e.inspect
+      %p= @data.class
+      %p= @data.inspect
   
