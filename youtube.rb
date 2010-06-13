@@ -23,6 +23,10 @@ class MyApp < Sinatra::Base
     show_top_page
   end
 
+  get '/dashboard/:account' do
+    haml :account
+  end
+
 
   error do
     require 'pp'
