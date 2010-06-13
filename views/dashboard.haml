@@ -6,7 +6,10 @@
   %body
     .main
       .title #{@account}のリスト
-      %br
+      %dl
       - @entries.each do |e|
-        %p= e.href
-  
+        %dt
+          %a{:href => "/playlist/#{@account}/#{e.playlist_id}/"} #{e.title}
+          %span= e.updated.strftime('%Y-%m-%d %H:%M:%S')
+        %dd
+          %span= e.content 
