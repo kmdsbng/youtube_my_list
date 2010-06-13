@@ -10,14 +10,17 @@ class MyApp < Sinatra::Base
   helpers do
     include Rack::Utils
     alias_method :h, :escape_html
+    def show_top_page
+      haml :index
+    end
   end
 
   get '' do
-    haml :index
+    show_top_page
   end
 
   get '/' do
-    haml :index
+    show_top_page
   end
 
 
