@@ -41,7 +41,7 @@ class YoutubeLoader
       content = n.xpath('./xmlns:content[@type="text"]')[0]
       media_content = n.xpath('./media:group/media:content[@yt:format="5"]', doc.root.namespaces)[0]
       PlaylistEntry.new(n.xpath('./xmlns:title')[0].text,
-                media_content ? media_content.attributes['url'] : nil,
+                media_content ? media_content.attributes['url'].text : nil,
                 content ? content : nil,
                 Time.parse(n.xpath('./xmlns:updated')[0].text)
       )

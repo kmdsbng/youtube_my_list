@@ -5,6 +5,7 @@ require 'rubygems'
 require 'sinatra/base'
 require File.dirname(__FILE__) + '/patch/patch_all'
 require 'youtube_loader'
+require 'cgi'
 
 class MyApp < Sinatra::Base
   helpers do
@@ -12,6 +13,10 @@ class MyApp < Sinatra::Base
     alias_method :h, :escape_html
     def show_top_page
       haml :index
+    end
+
+    def u(str)
+      CGI.escape(str)
     end
 
   end
