@@ -1,0 +1,12 @@
+!!! XML
+!!!
+%html
+  %header
+    %title #{@account}のリスト
+  %body
+    .main
+      .title #{@account}のリスト
+      %br
+      - @entries.each do |e|
+        %p= e
+  

@@ -4,7 +4,6 @@ $:.unshift File.dirname(__FILE__) + '/lib'
 require 'rubygems'
 require 'sinatra/base'
 require File.dirname(__FILE__) + '/patch/patch_all'
-require 'starwars_formatter'
 
 class MyApp < Sinatra::Base
   helpers do
@@ -26,7 +25,8 @@ class MyApp < Sinatra::Base
   get '/dashboard' do
     @account = params[:account]
     url = "http://gdata.youtube.com/feeds/api/users/#{h @account}/playlists"
-    @entries = [:a, :b, :c]
+    #data = 
+    @entries = [1, 2, 3]
     haml :dashboard
   end
 
