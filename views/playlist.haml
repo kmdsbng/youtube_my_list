@@ -3,9 +3,9 @@
 %html
   %header
     %title 再生リスト: #{@title}
-  %body
+  %body{:style => 'font-size: 30px'}
     .main
-      %h1 再生リスト: #{@title}
+      %div 再生リスト: #{@title}
       %ol
       - @entries.each do |e|
         %li

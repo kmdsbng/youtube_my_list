@@ -3,10 +3,10 @@
 %html
   %header
     %title #{@account}のリスト
-  %body
+  %body{:style => 'font-size: 30px'}
     .main
-      %h1.title #{@account}のリスト
-      %h2 再生リスト
+      %div.title ■#{@account}のリスト
+      %div 再生リスト
       %dl
       - @entries.each do |e|
         %dt
