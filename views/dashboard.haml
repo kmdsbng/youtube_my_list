@@ -11,8 +11,8 @@
       - @entries.each do |e|
         %dt
           %a{:href => "playlist?account=#{@account}&playlist_id=#{e.playlist_id}"} #{e.title}
-          %span= e.updated.strftime('%Y-%m-%d %H:%M:%S')
+          !!!%span= e.updated.strftime('%Y-%m-%d %H:%M:%S')
         %dd
-          %span= e.content 
+          !!!%span= e.content 
 
 
