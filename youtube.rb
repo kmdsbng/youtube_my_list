@@ -35,7 +35,7 @@ class MyApp < Sinatra::Base
     haml :dashboard
   end
 
-  get '/playlist/:account/:playlist_id/' do
+  get '/playlist' do
     @account = params[:account]
     @playlist_id = params[:playlist_id]
     @title, @entries = YoutubeLoader.new.load_playlist(@playlist_id)
