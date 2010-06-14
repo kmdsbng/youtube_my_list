@@ -42,6 +42,12 @@ class MyApp < Sinatra::Base
     haml :playlist
   end
 
+  get '/play' do
+    @url = params[:url]
+    @title = '再生'
+    haml :play
+  end
+
   error do
     require 'pp'
     x = env['sinatra.error']
