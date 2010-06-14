@@ -1,9 +1,11 @@
 #!/usr/local/bin/ruby
+$KCODE = 'u'
 $:.unshift File.dirname(__FILE__) + '/lib'
 
 require 'rubygems'
 require 'sinatra/base'
 require File.dirname(__FILE__) + '/patch/patch_all'
+require 'ext'
 require 'youtube_loader'
 require 'cgi'
 
