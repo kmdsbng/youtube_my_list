@@ -1,18 +1,16 @@
-#!/usr/local/bin/ruby -I /home/kmdsbng/lib/ruby -I /home/kmdsbng/local/lib
-ENV['GEM_HOME'] = '/home/kmdsbng/local/lib/ruby/gems'
+#!/usr/local/bin/ruby
+
+require File.join(File.dirname(__FILE__), 'environment')
 
 begin
-  require File.dirname(__FILE__) + '/starwars'
-
-  set :run => false, :environment => :production
-  Rack::Handler::FastCGI.run Sinatra::Application
+  require File.dirname(__FILE__) + '/youtube'
+  MyApp.set(:run => false, :environment => :production)
+  Rack::Handler::FastCGI.run MyApp
 
 rescue Exception => x
-
   require 'rubygems'
   require 'fcgi'
   require 'pp'
-
   FCGI.each_cgi {|cgi|
     print cgi.header('text/plain')
     puts "Exception: " + x.message
