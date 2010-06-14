@@ -7,6 +7,8 @@ require File.dirname(__FILE__) + '/patch/patch_all'
 require 'youtube_loader'
 require 'cgi'
 
+#Haml::Template.options[:escape_html] = true
+
 class MyApp < Sinatra::Base
   helpers do
     include Rack::Utils

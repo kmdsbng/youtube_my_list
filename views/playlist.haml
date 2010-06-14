@@ -6,11 +6,11 @@
   %body
     .main
       %h1 再生リスト: #{@title}
-      %dl
+      %ol
       - @entries.each do |e|
-        %dt
+        %li
           - if (e.href)
-            %a{:href => "play?url=#{u e.href}/"} #{e.title}
+            %a{:href => "play?url=#{u e.href}"} #{e.title}
           - else
             %span= e.title
 
