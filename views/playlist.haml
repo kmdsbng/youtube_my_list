@@ -7,11 +7,11 @@
     .main
       %div 再生リスト: #{@title}
       %ol
-      - @entries.each do |e|
-        %li
-          - if (e.href)
-            %a{:href => "play?url=#{u e.href}"} #{e.title.shorten}
-          - else
-            %span= e.title
+        - @entries.each do |e|
+          %li
+            - if (e.href)
+              %a{:href => "play?url=#{u e.href}"} #{e.title.shorten}
+            - else
+              %span= e.title
 
 

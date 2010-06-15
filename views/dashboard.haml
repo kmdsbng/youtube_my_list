@@ -8,11 +8,11 @@
       %div.title ■#{@account}のリスト
       %div 再生リスト
       %dl
-      - @entries.each do |e|
-        %dt
-          %a{:href => "playlist?account=#{@account}&playlist_id=#{e.playlist_id}"} #{e.title}
-          !!!%span= e.updated.strftime('%Y-%m-%d %H:%M:%S')
-        %dd
-          !!!%span= e.content 
+        - @entries.each do |e|
+          %dt
+            %a{:href => "playlist?account=#{@account}&playlist_id=#{e.playlist_id}"} #{e.title}
+            !!!%span= e.updated.strftime('%Y-%m-%d %H:%M:%S')
+          %dd
+            !!!%span= e.content 
 
 
