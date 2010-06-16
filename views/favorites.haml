@@ -6,11 +6,8 @@
   %body{:style => 'font-size: 30px'}
     .main
       %div.title ■#{@account}のお気に入り
-      %dl
+      %ol
         - @favorites.each do |f|
-          %dt
+          %li
             %a{:href => "play?account=#{@account}&url=#{u f.href}"} #{f.title.shorten}
-            !!!%span= e.updated.strftime('%Y-%m-%d %H:%M:%S')
-          %dd
-            !!!%span= e.content 
 
