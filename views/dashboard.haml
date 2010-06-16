@@ -6,21 +6,13 @@
   %body{:style => 'font-size: 30px'}
     .main
       %div.title ■#{@account}のリスト
-      %div お気に入り
-      %dl
-        - @favorites.each do |f|
-          %dt
-            %a{:href => "play?account=#{@account}&url=#{u f.href}"} #{f.title}
-            !!!%span= e.updated.strftime('%Y-%m-%d %H:%M:%S')
-          %dd
-            !!!%span= e.content 
+      %ul
+        %li
+          %a{:href => "favorites?account=#{@account}"} お気に入り
       %div 再生リスト
-      %dl
+      %ul
         - @entries.each do |e|
-          %dt
+          %li
             %a{:href => "playlist?account=#{@account}&playlist_id=#{e.playlist_id}"} #{e.title}
-            !!!%span= e.updated.strftime('%Y-%m-%d %H:%M:%S')
-          %dd
-            !!!%span= e.content 
 
 

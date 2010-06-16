@@ -9,7 +9,7 @@
       %dl
         - @favorites.each do |f|
           %dt
-            %a{:href => "play?account=#{@account}&url=#{u f.href}"} #{f.title}
+            %a{:href => "play?account=#{@account}&url=#{u f.href}"} #{f.title.shorten}
             !!!%span= e.updated.strftime('%Y-%m-%d %H:%M:%S')
           %dd
             !!!%span= e.content 
