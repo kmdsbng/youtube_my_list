@@ -3,8 +3,7 @@
 %html
   %header
     %title #{@title}
-  %body
-    .main
-      != "<embed src=\"#{@url + '&autoplay=1&ap=%2526fmt%3D18'}\" type=\"application/x-shockwave-flash\" wmode=\"transparent\" width=\"560\" height=\"385\"></embed>"
+  %body{:style => 'margin: 0px; padding: 0px'}
+    != "<embed src=\"#{@url + '&autoplay=1&ap=%2526fmt%3D18'}\" type=\"application/x-shockwave-flash\" wmode=\"transparent\" width=\"560\" height=\"385\"></embed>"
 
 
