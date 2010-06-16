@@ -33,10 +33,10 @@ class YoutubeLoader
     doc = @content_loader.load_xml(url)
     entry_nodes = doc.xpath(%{//xmlns:entry})
     title = doc.xpath(%{/xmlns:feed/xmlns:title})[0].text
-    [title, convert_to_playlist_entry(doc, entry_nodes)]
+    [title, convert_to_video_entry(doc, entry_nodes)]
   end
 
-  def convert_to_playlist_entry(doc, nodes)
+  def convert_to_video_entry(doc, nodes)
     nodes.map {|n|
       content = n.xpath('./xmlns:content[@type="text"]')[0]
       media_content = n.xpath('./media:group/media:content[@yt:format="5"]', doc.root.namespaces)[0]
@@ -52,7 +52,7 @@ class YoutubeLoader
     url = "http://gdata.youtube.com/feeds/api/users/#{CGI.escapeHTML(account)}/favorites"
     doc = @content_loader.load_xml(url)
     entry_nodes = doc.xpath(%{//xmlns:entry})
-    convert_to_playlist_entry(doc, entry_nodes)
+    convert_to_video_entry(doc, entry_nodes)
   end
 
 end
