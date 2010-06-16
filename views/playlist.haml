@@ -10,6 +10,8 @@
         - @entries.each do |e|
           %li
             - if (e.href)
+              %a{:href => "play?url=#{u e.href}"}
+                %img{:src => e.thumbnail}
               %a{:href => "play?url=#{u e.href}"} #{e.title.shorten}
             - else
               %span= e.title.shorten

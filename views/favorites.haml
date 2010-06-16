@@ -9,5 +9,7 @@
       %ol
         - @favorites.each do |f|
           %li
+            %a{:href => "play?account=#{@account}&url=#{u f.href}"}
+              %img{:src => f.thumbnail}
             %a{:href => "play?account=#{@account}&url=#{u f.href}"} #{f.title.shorten}
 

@@ -2,7 +2,7 @@ require 'content_loader'
 require 'cgi'
 
 Entry = Struct.new(:title, :href, :content, :updated, :playlist_id)
-VideoEntry = Struct.new(:title, :href, :content, :updated)
+VideoEntry = Struct.new(:title, :href, :content, :updated, :thumbnail)
 
 class YoutubeLoader
   def initialize(content_loader=ContentLoader.new)
@@ -40,10 +40,12 @@ class YoutubeLoader
     nodes.map {|n|
       content = n.xpath('./xmlns:content[@type="text"]')[0]
       media_content = n.xpath('./media:group/media:content[@yt:format="5"]', doc.root.namespaces)[0]
+      thumbnail = n.xpath('./media:group/media:thumbnail')[0]
       VideoEntry.new(n.xpath('./xmlns:title')[0].text,
                 media_content ? media_content.attributes['url'].text : nil,
                 content ? content : nil,
-                Time.parse(n.xpath('./xmlns:updated')[0].text)
+                Time.parse(n.xpath('./xmlns:updated')[0].text),
+                thumbnail ? thumbnail.attributes['url'].text : nil
       )
     }
   end
