@@ -36,6 +36,7 @@ class MyApp < Sinatra::Base
   get '/dashboard' do
     @account = params[:account]
     @entries = YoutubeLoader.new.load_playlists(@account)
+    @favorites = YoutubeLoader.new.load_favorites(@account)
     haml :dashboard
   end
 

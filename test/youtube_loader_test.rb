@@ -12,6 +12,11 @@ class YoutubeLoaderTest < Test::Unit::TestCase
     correct_entry_element_size = 20
     assert_equal(correct_entry_element_size, YoutubeLoader.new(PlaylistLoaderMock.new).load_playlist('')[1].size)
   end
+
+  must 'load favorites' do
+    correct_entry_element_size = 24
+    assert_equal(correct_entry_element_size, YoutubeLoader.new(FavoritesLoaderMock.new).load_favorites('').size)
+  end
 end
 
 

@@ -48,6 +48,25 @@ class YoutubeLoader
     }
   end
 
+  def load_favorites(account)
+    url = "http://gdata.youtube.com/feeds/api/users/#{CGI.escapeHTML(account)}/favorites"
+    doc = @content_loader.load_xml(url)
+    entry_nodes = doc.xpath(%{//xmlns:entry})
+    convert_to_playlist_entry(doc, entry_nodes)
+  end
+
+  def convert_to_favorites_entry(doc, nodes)
+    nodes.map {|n|
+      content = n.xpath('./xmlns:content[@type="text"]')[0]
+      media_content = n.xpath('./media:group/media:content[@yt:format="5"]', doc.root.namespaces)[0]
+      PlaylistEntry.new(n.xpath('./xmlns:title')[0].text,
+                media_content ? media_content.attributes['url'].text : nil,
+                content ? content : nil,
+                Time.parse(n.xpath('./xmlns:updated')[0].text)
+      )
+    }
+  end
+
 end
 
 
