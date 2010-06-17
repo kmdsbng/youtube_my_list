@@ -3,7 +3,7 @@ require 'cgi'
 
 Entry = Struct.new(:title, :href, :content, :updated, :playlist_id)
 VideoEntry = Struct.new(:title, :href, :content, :updated, :thumbnail)
-VideoListData = Struct.new(:entries, :prev_url, :next_url)
+VideoListData = Struct.new(:entries, :prev_url, :next_url, :title)
 
 class YoutubeLoader
   def initialize(content_loader=ContentLoader.new)
@@ -21,8 +21,7 @@ class YoutubeLoader
     nodes.map {|n|
       content = n.xpath('./xmlns:content[@type="text"]')[0]
       Entry.new(n.xpath('./xmlns:title')[0].text,
-                n.xpath('./gd:feedLink')[0].attributes['href'].text,
-                content ? content : nil,
+                n.xpath('./gd:feedLink')[0].attributes['href'].text, content ? content : nil,
                 Time.parse(n.xpath('./xmlns:updated')[0].text),
                 n.xpath('./yt:playlistId')[0].text
       )
@@ -53,17 +52,16 @@ class YoutubeLoader
 
   def load_favorites(account)
     url = "http://gdata.youtube.com/feeds/api/users/#{CGI.escapeHTML(account)}/favorites"
-    load_favorites_sub(url)
+    load_favorites_by_url(url)
   end
 
-  def load_favorites_sub(url)
-    puts url
+  def load_favorites_by_url(url)
     doc = @content_loader.load_xml(url)
     entry_nodes = doc.xpath(%{//xmlns:entry})
     videos = convert_to_video_entry(doc, entry_nodes)
     next_url = get_next_url(doc)
     prev_url = get_prev_url(doc)
-    videos
+    VideoListData.new(videos, prev_url, next_url)
   end
 
   def get_next_url(doc)
@@ -72,7 +70,7 @@ class YoutubeLoader
   end
 
   def get_prev_url(doc)
-    rel = doc.xpath(%{//xmlns:link[@rel="prev"]})
+    rel = doc.xpath(%{//xmlns:link[@rel="previous"]})
     rel.empty? ? nil : rel[0].attributes['href'].text
   end
 

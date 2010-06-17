@@ -15,7 +15,12 @@ class YoutubeLoaderTest < Test::Unit::TestCase
 
   must 'load favorites' do
     correct_entry_element_size = 24
-    assert_equal(correct_entry_element_size, YoutubeLoader.new(FavoritesLoaderMock.new).load_favorites('').size)
+    video_list = load_favorites
+    assert_equal(correct_entry_element_size, video_list.entries.size)
+  end
+
+  def load_favorites
+    YoutubeLoader.new(FavoritesLoaderMock.new).load_favorites('')
   end
 end
 
