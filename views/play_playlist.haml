@@ -1,0 +1,22 @@
+!!! XML
+!!!
+%html
+  %header
+    %title #{@title}
+  %body{:style => 'margin: 0px; padding: 0px; border: 1px black solid; font-size: 30px;'}
+    %div{:style => 'margin: 0px; padding: 0px;'}
+      %table
+        %tr
+          %td
+            %div{:id => "ytapiplayer"}
+          %td{:style => "vertical-align: top"}
+            %a{:href => "playlist?account=#{u @account}&url=#{u @playlist_url}"} 再生リストに戻る
+            %br
+            != "<input type=\"hidden\" id=\"video_url\" value=\"#{@playlist_video.href + '&autoplay=1&ap=%2526fmt%3D18'}\">"
+            %a{:href => "?account=#{u @account}&playlist_id=#{u @playlist_id}&position=#{u (@position.to_i - 1).to_s}&reverse=1", :id => "prev_url"} &lt;前の動画
+            %br
+            %a{:href => "?account=#{u @account}&playlist_id=#{u @playlist_id}&position=#{u (@position.to_i + 1).to_s}", :id => "next_url"} 次の動画&gt;
+            %br
+    %script{:type => "text/javascript", :src => "js/swfobject.js"}
+    %script{:type => "text/javascript", :src => "js/ytplayer.js"}
+
