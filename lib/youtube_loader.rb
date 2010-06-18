@@ -3,7 +3,7 @@ require 'cgi'
 
 Entry = Struct.new(:title, :href, :content, :updated, :playlist_id)
 VideoEntry = Struct.new(:title, :href, :content, :updated, :thumbnail)
-VideoListData = Struct.new(:entries, :prev_url, :next_url, :title)
+VideoListData = Struct.new(:entries, :prev_url, :next_url, :title, :account)
 
 class YoutubeLoader
   def initialize(content_loader=ContentLoader.new)
@@ -36,6 +36,27 @@ class YoutubeLoader
     [title, convert_to_video_entry(doc, entry_nodes)]
   end
 
+  def load_playlist(playlist_id)
+    url = "http://gdata.youtube.com/feeds/api/playlists/#{CGI.escapeHTML(playlist_id)}"
+    load_playlist_by_url(url)
+  end
+
+  def load_playlist_by_url(url)
+    doc = @content_loader.load_xml(url)
+    entry_nodes = doc.xpath(%{//xmlns:entry})
+    title = get_title(doc)
+    videos = convert_to_video_entry(doc, entry_nodes)
+    create_video_list(doc, videos)
+  end
+
+  def create_video_list(doc, videos)
+    next_url = get_next_url(doc)
+    prev_url = get_prev_url(doc)
+    title = get_title(doc)
+    VideoListData.new(videos, prev_url, next_url, title)
+  end
+
+
   def convert_to_video_entry(doc, nodes)
     nodes.map {|n|
       content = n.xpath('./xmlns:content[@type="text"]')[0]
@@ -59,9 +80,12 @@ class YoutubeLoader
     doc = @content_loader.load_xml(url)
     entry_nodes = doc.xpath(%{//xmlns:entry})
     videos = convert_to_video_entry(doc, entry_nodes)
-    next_url = get_next_url(doc)
-    prev_url = get_prev_url(doc)
-    VideoListData.new(videos, prev_url, next_url)
+    create_video_list(doc, videos)
+  end
+
+  def get_title(doc)
+    title = doc.xpath(%{/xmlns:feed/xmlns:title})
+    title.empty? ? nil : title[0].text
   end
 
   def get_next_url(doc)
