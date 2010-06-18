@@ -74,6 +74,7 @@ class MyApp < Sinatra::Base
     @url = params[:url]
     loader = YoutubeLoader.new
     @playlist = @url ? loader.load_playlist_by_url(@url) : loader.load_playlist(@playlist_id)
+    @playlist_id = @playlist.playlist_id
     haml :playlist
   end
 

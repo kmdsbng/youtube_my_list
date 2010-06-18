@@ -3,7 +3,7 @@ require 'cgi'
 
 Entry = Struct.new(:title, :href, :content, :updated, :playlist_id)
 VideoEntry = Struct.new(:title, :href, :content, :updated, :thumbnail, :position)
-VideoListData = Struct.new(:entries, :prev_url, :next_url, :title, :author, :account)
+VideoListData = Struct.new(:entries, :prev_url, :next_url, :title, :author, :playlist_id)
 PlaylistVideo = Struct.new(:href, :total)
 
 class YoutubeLoader
@@ -63,7 +63,8 @@ class YoutubeLoader
     prev_url = get_prev_url(doc)
     title = get_title(doc)
     author = get_author(doc)
-    VideoListData.new(videos, prev_url, next_url, title, author)
+    playlist_id = get_playlist_id(doc)
+    VideoListData.new(videos, prev_url, next_url, title, author, playlist_id)
   end
 
   def convert_to_video_entry(doc, nodes)
@@ -113,6 +114,12 @@ class YoutubeLoader
     author = doc.xpath(%{/xmlns:feed/xmlns:author/xmlns:name})
     author.empty? ? nil : author[0].text
   end
+
+  def get_playlist_id(doc)
+    e = doc.xpath(%{/xmlns:feed/yt:playlistId})
+    e.empty? ? nil : e[0].text
+  end
+
 end
 
 
