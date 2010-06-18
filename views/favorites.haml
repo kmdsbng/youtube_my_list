@@ -5,7 +5,7 @@
     %title #{@account}のお気に入り
   %body{:style => 'font-size: 30px'}
     .main
-      %div.title ■#h {@account}のお気に入り
+      %div.title ■#{h @account}のお気に入り
       %div
         %a{:href => "dashboard?account=#{u @account}"} #{h @account}のリスト
         %span ||
