@@ -91,6 +91,8 @@ class MyApp < Sinatra::Base
     loader = YoutubeLoader.new
     @playlist_video = loader.load_playlist_video(@playlist_id, @position)
     @title = '再生'
+    page = (@position - 1 / 25) + 1
+    @playlist_url = YoutubeLoader.new.get_playlist_url(@playlist_id) + "?start-index=#{page * 25 + 1}&max-results=25"
     if @playlist_video.href.to_s.empty?
       redirect_to_next_playitem
     else

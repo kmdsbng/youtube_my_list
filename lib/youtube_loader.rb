@@ -30,8 +30,11 @@ class YoutubeLoader
   end
 
   def load_playlist(playlist_id)
-    url = "http://gdata.youtube.com/feeds/api/playlists/#{CGI.escapeHTML(playlist_id)}"
-    load_playlist_by_url(url)
+    load_playlist_by_url(get_playlist_url(playlist_id))
+  end
+
+  def get_playlist_url(playlist_id)
+    "http://gdata.youtube.com/feeds/api/playlists/#{CGI.escapeHTML(playlist_id)}"
   end
 
   def load_playlist_by_url(url)
