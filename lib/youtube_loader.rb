@@ -53,9 +53,9 @@ class YoutubeLoader
     next_url = get_next_url(doc)
     prev_url = get_prev_url(doc)
     title = get_title(doc)
-    VideoListData.new(videos, prev_url, next_url, title)
+    author = get_author(doc)
+    VideoListData.new(videos, prev_url, next_url, title, author)
   end
-
 
   def convert_to_video_entry(doc, nodes)
     nodes.map {|n|
@@ -98,6 +98,10 @@ class YoutubeLoader
     rel.empty? ? nil : rel[0].attributes['href'].text
   end
 
+  def get_author(doc)
+    author = doc.xpath(%{/xmlns:feed/xmlns:author/xmlns:name})
+    author.empty? ? nil : author[0].text
+  end
 end
 
 
