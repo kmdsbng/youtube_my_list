@@ -50,7 +50,9 @@ class MyApp < Sinatra::Base
   get '/playlist' do
     @account = params[:account]
     @playlist_id = params[:playlist_id]
-    @title, @entries = YoutubeLoader.new.load_playlist(@playlist_id)
+    @url = params[:url]
+    loader = YoutubeLoader.new
+    @playlist = @url ? loader.load_playlist_by_url(@url) : loader.load_playlist(@playlist_id)
     haml :playlist
   end
 

@@ -2,12 +2,17 @@
 !!!
 %html
   %header
-    %title 再生リスト: #{@title}
+    %title 再生リスト: #{@playlist.title}
   %body{:style => 'font-size: 30px'}
     .main
-      %div 再生リスト: #{@title}
+      %div 再生リスト: #{@playlist.title}
+      %div
+        - if @playlist.prev_url
+          %a{:href => "?url=#{u @playlist.prev_url}"} &lt;前のページ
+        - if @playlist.next_url
+          %a{:href => "?url=#{u @playlist.next_url}"} 次のページ&gt;
       %ol
-        - @entries.each do |e|
+        - @playlist.entries.each do |e|
           %li
             - if (e.href)
               %a{:href => "play?url=#{u e.href}"}
@@ -15,5 +20,9 @@
               %a{:href => "play?url=#{u e.href}"} #{e.title.shorten}
             - else
               %span= e.title.shorten
-
+      %div
+        - if @playlist.prev_url
+          %a{:href => "?url=#{u @playlist.prev_url}"} &lt;前のページ
+        - if @playlist.next_url
+          %a{:href => "?url=#{u @playlist.next_url}"} 次のページ&gt;
 
