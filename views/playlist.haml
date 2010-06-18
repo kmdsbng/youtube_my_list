@@ -17,9 +17,9 @@
         - @playlist.entries.each do |e|
           %li
             - if (e.href)
-              %a{:href => "play?account=#{u @account}&url=#{u e.href}"}
+              %a{:href => "play_playlist?account=#{u @account}&playlist_id=#{u @playlist_id}&position=#{u e.position}"}
                 %img{:src => e.thumbnail}
-              %a{:href => "play?account=#{u @account}&url=#{u e.href}"} #{e.title.shorten}
+              %a{:href => "play_playlist?account=#{u @account}&playlist_id=#{u @playlist_id}&position=#{u e.position}"} #{e.title.shorten}
             - else
               %span= e.title.shorten
       %div
