@@ -20,7 +20,7 @@ class MyApp < Sinatra::Base
     end
 
     def u(str)
-      CGI.escape(str)
+      CGI.escape(str.to_s)
     end
 
   end
@@ -60,6 +60,17 @@ class MyApp < Sinatra::Base
     @url = params[:url]
     @title = '再生'
     haml :play
+  end
+
+  get '/play_playlist' do
+    @account = params[:account]
+    @playlist_id = params[:playlist_id]
+    @position = params[:position].to_i
+    @reverse = params[:reverse].to_i == 1
+    loader = YoutubeLoader.new
+    @playlist_video = loader.load_playlist_video(@playlist_id, @position)
+    @title = '再生'
+    haml :play_playlist
   end
 
   error do

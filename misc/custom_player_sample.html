@@ -6,8 +6,34 @@
 </head>
 <body>
 	
-    <embed src="http://www.youtube.com/v/L8zkzFeS994?f=playlists&app=youtube_gdata&id=FCDC71DC5FAD06B5?autoplay=1" type="application/x-shockwave-flash" width="416" height="337"></embed>
-</object>
+  <script type="text/javascript" src="../js/swfobject.js"></script>    
+  <div id="ytapiplayer">
+    You need Flash player 8+ and JavaScript enabled to view this video.
+  </div>
+
+  <script type="text/javascript">
+    var params = { allowScriptAccess: "always" };
+    var atts = { id: "myytplayer" };
+    swfobject.embedSWF("http://www.youtube.com/v/L8zkzFeS994?f=playlists&app=youtube_gdata&id=FCDC71DC5FAD06B5&autoplay=1&enablejsapi=1&playerapiid=ytplayer", 
+                       "ytapiplayer", "560", "365", "8", null, null, params, atts);
+
+    var ytplayer;
+    function onYouTubePlayerReady(playerId) {
+      ytplayer = document.getElementById("myytplayer");
+      ytplayer.addEventListener("onStateChange", "onytplayerStateChange");
+    }
+
+    // http://code.google.com/intl/en/apis/youtube/js_api_reference.html#Events
+    // This event is fired whenever the player's state changes. Possible values are unstarted (-1), ended (0), playing (1), paused (2), buffering (3), video cued (5). When the SWF is first loaded it will broadcast an unstarted (-1) event. When the video is cued and ready to play it will broadcast a video cued event (5).
+    function onytplayerStateChange(newState) {
+      //alert("Player's new state: " + newState);
+      if (newState == 0)
+        jumpToNextVideo();
+    }
+
+    function jumpToNextVideo() {
+    }
+  </script>
 </body>
 </html>
 

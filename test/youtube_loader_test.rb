@@ -19,6 +19,11 @@ class YoutubeLoaderTest < Test::Unit::TestCase
     assert_equal(correct_entry_element_size, video_list.entries.size)
   end
 
+  must 'load playlist video' do
+    video = YoutubeLoader.new(PlaylistVideoLoaderMock.new).load_playlist_video('FCDC71DC5FAD06B5', 3)
+    assert(!video.href.to_s.empty?)
+  end
+
   def load_favorites
     YoutubeLoader.new(FavoritesLoaderMock.new).load_favorites('')
   end

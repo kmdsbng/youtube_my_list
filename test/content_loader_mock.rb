@@ -12,6 +12,12 @@ class PlaylistLoaderMock < ContentLoader
   end
 end
 
+class PlaylistVideoLoaderMock < ContentLoader
+  def download_content(url)
+    File.read(File.join(File.dirname(__FILE__), 'playlist_video'))
+  end
+end
+
 class FavoritesLoaderMock < ContentLoader
   def download_content(url)
     File.read(File.join(File.dirname(__FILE__), 'favorites'))
