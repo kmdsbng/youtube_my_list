@@ -19,7 +19,6 @@ function onYouTubePlayerReady(playerId) {
 // http://code.google.com/intl/en/apis/youtube/js_api_reference.html#Events
 // This event is fired whenever the player's state changes. Possible values are unstarted (-1), ended (0), playing (1), paused (2), buffering (3), video cued (5). When the SWF is first loaded it will broadcast an unstarted (-1) event. When the video is cued and ready to play it will broadcast a video cued event (5).
 function onytplayerStateChange(newState) {
-  //alert("Player's new state: " + newState);
   if (newState == 0)
     jumpToNextVideo();
 }

@@ -23,6 +23,27 @@ class MyApp < Sinatra::Base
       CGI.escape(str.to_s)
     end
 
+    def redirect_to_next_playitem
+      next_position = calc_next_position(@position, @playlist_video.total, @reverse)
+      redirect "?account=#{u @account}&playlist_id=#{u @playlist_id}&position=#{u next_position}&reverse=#{@reverse ? 1 : 0}", 302
+    end
+
+    def calc_next_position(position, total, reverse)
+      if reverse
+        if (posision - 1 < 1)
+          total
+        else
+          [position - 1, total].min
+        end
+      else
+        if position + 1 > total
+          1
+        else
+          [position + 1, 1].max
+        end
+      end
+    end
+
   end
 
   get '' do
@@ -70,7 +91,11 @@ class MyApp < Sinatra::Base
     loader = YoutubeLoader.new
     @playlist_video = loader.load_playlist_video(@playlist_id, @position)
     @title = '再生'
-    haml :play_playlist
+    if @playlist_video.href.to_s.empty?
+      redirect_to_next_playitem
+    else
+      haml :play_playlist
+    end
   end
 
   error do
