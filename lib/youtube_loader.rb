@@ -3,7 +3,7 @@ require 'cgi'
 
 Entry = Struct.new(:title, :href, :content, :updated, :playlist_id)
 VideoEntry = Struct.new(:title, :href, :content, :updated, :thumbnail)
-VideoListData = Struct.new(:entries, :prev_url, :next_url, :title, :account)
+VideoListData = Struct.new(:entries, :prev_url, :next_url, :title, :author, :account)
 
 class YoutubeLoader
   def initialize(content_loader=ContentLoader.new)

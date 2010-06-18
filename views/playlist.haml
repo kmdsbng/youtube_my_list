@@ -7,22 +7,24 @@
     .main
       %div 再生リスト: #{@playlist.title}
       %div
+        %a{:href => "dashboard?account=#{u @account}"} #{h @account}のリスト
+        %span ||
         - if @playlist.prev_url
-          %a{:href => "?url=#{u @playlist.prev_url}"} &lt;前のページ
+          %a{:href => "?account=#{u @account}&url=#{u @playlist.prev_url}"} &lt;前のページ
         - if @playlist.next_url
-          %a{:href => "?url=#{u @playlist.next_url}"} 次のページ&gt;
+          %a{:href => "?account=#{u @account}&url=#{u @playlist.next_url}"} 次のページ&gt;
       %ol
         - @playlist.entries.each do |e|
           %li
             - if (e.href)
-              %a{:href => "play?url=#{u e.href}"}
+              %a{:href => "play?account=#{u @account}&url=#{u e.href}"}
                 %img{:src => e.thumbnail}
-              %a{:href => "play?url=#{u e.href}"} #{e.title.shorten}
+              %a{:href => "play?account=#{u @account}&url=#{u e.href}"} #{e.title.shorten}
             - else
               %span= e.title.shorten
       %div
         - if @playlist.prev_url
-          %a{:href => "?url=#{u @playlist.prev_url}"} &lt;前のページ
+          %a{:href => "?account=#{u @account}&url=#{u @playlist.prev_url}"} &lt;前のページ
         - if @playlist.next_url
-          %a{:href => "?url=#{u @playlist.next_url}"} 次のページ&gt;
+          %a{:href => "?account=#{u @account}&url=#{u @playlist.next_url}"} 次のページ&gt;
 

@@ -5,8 +5,10 @@
     %title #{@account}のお気に入り
   %body{:style => 'font-size: 30px'}
     .main
-      %div.title ■#{@account}のお気に入り
+      %div.title ■#h {@account}のお気に入り
       %div
+        %a{:href => "dashboard?account=#{u @account}"} #{h @account}のリスト
+        %span ||
         - if @favorites.prev_url
           %a{:href => "?account=#{@account}&url=#{u @favorites.prev_url}"} &lt;前のページ
         - if @favorites.next_url

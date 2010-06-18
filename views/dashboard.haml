@@ -5,14 +5,14 @@
     %title #{@account}のリスト
   %body{:style => 'font-size: 30px'}
     .main
-      %div.title ■#{@account}のリスト
+      %div.title ■#{h @account}のリスト
       %ul
         %li
-          %a{:href => "favorites?account=#{@account}"} お気に入り
+          %a{:href => "favorites?account=#{u @account}"} お気に入り
       %div 再生リスト
       %ul
         - @entries.each do |e|
           %li
-            %a{:href => "playlist?account=#{@account}&playlist_id=#{e.playlist_id}"} #{e.title}
+            %a{:href => "playlist?account=#{u @account}&playlist_id=#{e.playlist_id}"} #{e.title}
 
 
