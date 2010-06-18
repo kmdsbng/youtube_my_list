@@ -8,9 +8,9 @@
       %div.title ■#{@account}のお気に入り
       %div
         - if @favorites.prev_url
-          %a{:href => "?account=#{@account}&url=#{u @favorites.prev_url}"} &lt;前
+          %a{:href => "?account=#{@account}&url=#{u @favorites.prev_url}"} &lt;前のページ
         - if @favorites.next_url
-          %a{:href => "?account=#{@account}&url=#{u @favorites.next_url}"} 次&gt;
+          %a{:href => "?account=#{@account}&url=#{u @favorites.next_url}"} 次のページ&gt;
       %ol
         - @favorites.entries.each do |f|
           %li
@@ -19,7 +19,7 @@
             %a{:href => "play?account=#{@account}&url=#{u f.href}"} #{f.title.shorten}
       %div
         - if @favorites.prev_url
-          %a{:href => "?account=#{@account}&url=#{u @favorites.prev_url}"} &lt;前
+          %a{:href => "?account=#{@account}&url=#{u @favorites.prev_url}"} &lt;前のページ
         - if @favorites.next_url
-          %a{:href => "?account=#{@account}&url=#{u @favorites.next_url}"} 次&gt;
+          %a{:href => "?account=#{@account}&url=#{u @favorites.next_url}"} 次のページ&gt;
 
