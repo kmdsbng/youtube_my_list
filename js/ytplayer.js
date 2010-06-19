@@ -16,8 +16,8 @@ var ytplayer;
 var playerFinishHandled = false;
 function onYouTubePlayerReady(playerId) {
   ytplayer = document.getElementById("myytplayer");
-  //ytplayer.addEventListener("onStateChange", "onytplayerStateChange");
-  //playerFinishHandled = true;
+  ytplayer.addEventListener("onStateChange", "onytplayerStateChange");
+  playerFinishHandled = true;
 }
 
 // http://code.google.com/intl/en/apis/youtube/js_api_reference.html#Events
