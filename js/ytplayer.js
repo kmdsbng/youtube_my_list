@@ -7,13 +7,17 @@ var next_url_a = document.getElementById('next_url');
 var next_url = next_url_a.href;
 var prev_url_a = document.getElementById('prev_url');
 var prev_url = prev_url_a.href;
+var duration_input = document.getElementById('duration');
+var duration = duration.value;
 swfobject.embedSWF(video_url, 
                    "ytapiplayer", "560", "365", "8", null, null, params, atts);
 
 var ytplayer;
+var playerFinishHandled = false;
 function onYouTubePlayerReady(playerId) {
   ytplayer = document.getElementById("myytplayer");
-  ytplayer.addEventListener("onStateChange", "onytplayerStateChange");
+  //ytplayer.addEventListener("onStateChange", "onytplayerStateChange");
+  //playerFinishHandled = true;
 }
 
 // http://code.google.com/intl/en/apis/youtube/js_api_reference.html#Events
@@ -25,6 +29,13 @@ function onytplayerStateChange(newState) {
 
 function jumpToNextVideo() {
   location.href = next_url;
+}
+
+if (duration > 0) {
+  setTimeout(function() {
+    if (!playerFinishHandled)
+      jumpToNextVideo();
+  }, duration * 1000 + 10000);
 }
 
 
