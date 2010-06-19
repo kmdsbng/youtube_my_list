@@ -79,6 +79,7 @@ class MyApp < Sinatra::Base
   end
 
   get '/play' do
+    @account = params[:account]
     @url = params[:url]
     @title = '再生'
     haml :play
