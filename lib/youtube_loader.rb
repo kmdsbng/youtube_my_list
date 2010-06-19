@@ -2,9 +2,9 @@ require 'content_loader'
 require 'cgi'
 
 Entry = Struct.new(:title, :href, :content, :updated, :playlist_id)
-VideoEntry = Struct.new(:title, :href, :content, :updated, :thumbnail, :position)
+VideoEntry = Struct.new(:title, :href, :content, :updated, :thumbnail, :position, :duration)
 VideoListData = Struct.new(:entries, :prev_url, :next_url, :title, :author, :playlist_id)
-PlaylistVideo = Struct.new(:href, :total)
+PlaylistVideo = Struct.new(:href, :total, :duration)
 
 class YoutubeLoader
   def initialize(content_loader=ContentLoader.new)
@@ -53,6 +53,7 @@ class YoutubeLoader
     videos = convert_to_video_entry(doc, entry_nodes)
     result = PlaylistVideo.new
     result.href = videos.empty? ? nil : videos[0].href
+    result.duration = videos.empty? ? nil : videos[0].duration
     total_node = doc.xpath(%{/xmlns:feed/openSearch:totalResults})
     result.total = total_node ? total_node.text.to_i : 0
     result
@@ -78,7 +79,8 @@ class YoutubeLoader
                 content ? content : nil,
                 Time.parse(n.xpath('./xmlns:updated')[0].text),
                 thumbnail ? thumbnail.attributes['url'].text : nil,
-                position ? position.text : nil
+                position ? position.text : nil,
+                media_content ? media_content.attributes['duration'].text.to_i : 0
       )
     }
   end
