@@ -10,6 +10,8 @@
           %td
             %div{:id => "ytapiplayer"}
           %td{:style => "vertical-align: top"}
+            %a{:href => "dashboard?account=#{u @account}"} #{h @account}トップに戻る
+            %br
             %a{:href => "playlist?account=#{u @account}&url=#{u @playlist_url}"} 再生リストに戻る
             %br
             != "<input type=\"hidden\" id=\"video_url\" value=\"#{@playlist_video.href + '&autoplay=1&ap=%2526fmt%3D18&enablejsapi=1&playerapiid=ytplayer'}\">"
