@@ -1,0 +1,30 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+</head>
+<body>
+	
+  <object width="425" height="355" type="application/x-shockwave-flash" id="myytplayer" data="http://www.youtube.com/v/irtEWp4st5U?f=playlists&app=youtube_gdata&enablejsapi=1">
+    <param name="allowScriptAccess" value="always">
+  </object>
+  <input type="button" value="play" id="play">
+  <input type="button" value="stop" id="stop">
+</body>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+<script type="text/javascript">
+  $('#play').click(function() {
+      var player = $('#myytplayer')[0].playVideo();
+  });
+
+  $('#stop').click(function() {
+      var player = $('#myytplayer')[0].stopVideo();
+  });
+
+</script>
+</html>
+
+
+
+
