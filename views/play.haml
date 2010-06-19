@@ -11,10 +11,11 @@
             %div{:style => 'margin: 0px; padding: 0px; height: 100%; width: 100%;'}
               != "<embed src=\"#{@url + '&autoplay=1&ap=%2526fmt%3D18'}\" type=\"application/x-shockwave-flash\" wmode=\"transparent\" width=\"560\" height=\"385\"></embed>"
           %td{:style => "vertical-align: top"}
-            %a{:href => "dashboard?account=#{u @account}"} #{h @account}トップに戻る
-            %br
-            %a{:href => "favorites?account=#{u @account}"} お気に入りに戻る
-            %br
+            %ul
+              %li
+                %a{:href => "dashboard?account=#{u @account}"} #{h @account}トップに戻る
+              %li
+                %a{:href => "favorites?account=#{u @account}"} お気に入りに戻る
   :javascript
     var _gaq = _gaq || [];
     _gaq.push(['_setAccount', 'UA-1524372-2']);
