@@ -8,7 +8,7 @@ var next_url = next_url_a.href;
 var prev_url_a = document.getElementById('prev_url');
 var prev_url = prev_url_a.href;
 var duration_input = document.getElementById('duration');
-var duration = duration.value;
+var duration = duration_input.value;
 swfobject.embedSWF(video_url, 
                    "ytapiplayer", "560", "365", "8", null, null, params, atts);
 
