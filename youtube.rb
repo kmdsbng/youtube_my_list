@@ -12,6 +12,8 @@ require 'cgi'
 #Haml::Template.options[:escape_html] = true
 
 class MyApp < Sinatra::Base
+  set :haml, :escape_html => true
+
   helpers do
     include Rack::Utils
     alias_method :h, :escape_html
