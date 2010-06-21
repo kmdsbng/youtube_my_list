@@ -14,7 +14,7 @@
               %li
                 %a{:href => "dashboard?account=#{u @account}"} #{h @account}トップに戻る
               %li
-                %a{:href => "search?account=#{u @account}&url=#{u @search_url}"} 検索結果に戻る
+                %a{:href => "search?account=#{u @account}&url=#{u @search_url}&q=#{u @q}"} 検索結果に戻る
               %li
                 %a{:href => "?account=#{u @account}&q=#{u @q}&position=#{u (@position.to_i - 1).to_s}&reverse=1", :id => "prev_url"} &lt;前の動画
               %li
