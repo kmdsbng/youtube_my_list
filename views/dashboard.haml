@@ -8,6 +8,8 @@
       %div.title ■#{h @account}トップ
       %ul
         %li
+          %a{:href => "search_top?account=#{u @account}"} キーワード検索
+        %li
           %a{:href => "favorites?account=#{u @account}"} お気に入り
       %div 再生リスト
       %ul

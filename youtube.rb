@@ -78,6 +78,22 @@ class MyApp < Sinatra::Base
     haml :playlist
   end
 
+  get '/search_top' do
+    @account = params[:account]
+    @videos = VideoListData.new
+    @videos.entries = []
+    haml :search
+  end
+
+  get '/search' do
+    @account = params[:account]
+    @q = params[:q]
+    @url = params[:url]
+    loader = YoutubeLoader.new
+    @videos = @url ? loader.search_videos_by_url(@url) : loader.search_videos(@q)
+    haml :search
+  end
+
   get '/play' do
     @account = params[:account]
     @url = params[:url]

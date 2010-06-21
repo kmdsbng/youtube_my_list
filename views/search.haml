@@ -1,0 +1,51 @@
+!!! XML
+!!!
+%html
+  %header
+    %title キーワード検索: #{@videos.title}
+  %body{:style => 'font-size: 30px'}
+    .main
+      %div ■キーワード検索: #{@videos.title}
+      %div 
+        %form{:action => 'search', :method => 'get'}
+          %input{:name => 'account', :type => 'hidden', :value => h(@account)}
+          %input{:name => 'q', :type => 'textbox', :value => h(@q)}
+          %input{:type => 'submit', :value => '検索'}
+      - unless @videos.entries.empty?
+        %div
+          %a{:href => "dashboard?account=#{u @account}"} #{h @account}トップに戻る
+          %span ||
+          - if @videos.prev_url
+            %a{:href => "?account=#{u @account}&url=#{u @videos.prev_url}"} &lt;前のページ
+          - if @videos.next_url
+            %a{:href => "?account=#{u @account}&url=#{u @videos.next_url}"} 次のページ&gt;
+      %table
+        - @videos.entries.each do |e|
+          %tr
+            %td
+              - if (e.href)
+                %a{:href => "play?account=#{u @account}&url=#{u e.href}"}
+                  %img{:src => e.thumbnail}
+            %td
+              - if (e.href)
+                %a{:href => "play?account=#{u @account}&url=#{u e.href}"} #{h e.title.shorten}
+              - else
+                %span= h e.title.shorten
+      %div
+        %a{:href => "dashboard?account=#{u @account}"} #{h @account}トップに戻る
+        %span ||
+        - if @videos.prev_url
+          %a{:href => "?account=#{u @account}&url=#{u @videos.prev_url}"} &lt;前のページ
+        - if @videos.next_url
+          %a{:href => "?account=#{u @account}&url=#{u @videos.next_url}"} 次のページ&gt;
+  :javascript
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-1524372-2']);
+    _gaq.push(['_trackPageview']);
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+
+

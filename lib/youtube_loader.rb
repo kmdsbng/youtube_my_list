@@ -46,7 +46,7 @@ class YoutubeLoader
   end
 
   def load_playlist_video(playlist_id, position)
-    url = "http://gdata.youtube.com/feeds/api/playlists/#{CGI.escapeHTML(playlist_id)}?start-index=#{position}&max-results=1"
+    url = "http://gdata.youtube.com/feeds/api/playlists/#{CGI.escape(playlist_id)}?start-index=#{position}&max-results=1"
     doc = @content_loader.load_xml(url)
     entry_nodes = doc.xpath(%{//xmlns:entry})
     title = get_title(doc)
@@ -86,13 +86,27 @@ class YoutubeLoader
   end
 
   def load_favorites(account)
-    url = "http://gdata.youtube.com/feeds/api/users/#{CGI.escapeHTML(account)}/favorites"
+    url = "http://gdata.youtube.com/feeds/api/users/#{CGI.escape(account)}/favorites"
     load_favorites_by_url(url)
   end
 
   def load_favorites_by_url(url)
     doc = @content_loader.load_xml(url)
     entry_nodes = doc.xpath(%{//xmlns:entry})
+    videos = convert_to_video_entry(doc, entry_nodes)
+    create_video_list(doc, videos)
+  end
+
+  def search_videos(keyword)
+    order = 'relevance'
+    url = "http://gdata.youtube.com/feeds/api/videos?vq=#{CGI.escape(keyword.gsub(/ +/, '+'))}&orderby=#{order}&start-index=1&max-results=25"
+    search_videos_by_url(url)
+  end
+
+  def search_videos_by_url(url)
+    doc = @content_loader.load_xml(url)
+    entry_nodes = doc.xpath(%{//xmlns:entry})
+    title = get_title(doc)
     videos = convert_to_video_entry(doc, entry_nodes)
     create_video_list(doc, videos)
   end
