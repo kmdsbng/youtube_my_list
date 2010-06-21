@@ -3,7 +3,7 @@ require 'cgi'
 
 Entry = Struct.new(:title, :href, :content, :updated, :playlist_id)
 VideoEntry = Struct.new(:title, :href, :content, :updated, :thumbnail, :position, :duration)
-VideoListData = Struct.new(:entries, :prev_url, :next_url, :title, :author, :playlist_id)
+VideoListData = Struct.new(:entries, :prev_url, :next_url, :title, :author, :playlist_id, :start_index)
 PlaylistVideo = Struct.new(:href, :total, :duration)
 
 class YoutubeLoader
@@ -59,13 +59,28 @@ class YoutubeLoader
     result
   end
 
+  def load_search_video(q, position, order='relevance')
+    url = "http://gdata.youtube.com/feeds/api/videos?vq=#{CGI.escape(q.gsub(/ +/, '+'))}&orderby=#{order}&start-index=#{position}&max-results=1"
+    doc = @content_loader.load_xml(url)
+    entry_nodes = doc.xpath(%{//xmlns:entry})
+    title = get_title(doc)
+    videos = convert_to_video_entry(doc, entry_nodes)
+    result = PlaylistVideo.new
+    result.href = videos.empty? ? nil : videos[0].href
+    result.duration = videos.empty? ? nil : videos[0].duration
+    total_node = doc.xpath(%{/xmlns:feed/openSearch:totalResults})
+    result.total = total_node ? total_node.text.to_i : 0
+    result
+  end
+
   def create_video_list(doc, videos)
     next_url = get_next_url(doc)
     prev_url = get_prev_url(doc)
     title = get_title(doc)
     author = get_author(doc)
     playlist_id = get_playlist_id(doc)
-    VideoListData.new(videos, prev_url, next_url, title, author, playlist_id)
+    start_index = get_start_index(doc)
+    VideoListData.new(videos, prev_url, next_url, title, author, playlist_id, start_index)
   end
 
   def convert_to_video_entry(doc, nodes)
@@ -97,10 +112,12 @@ class YoutubeLoader
     create_video_list(doc, videos)
   end
 
-  def search_videos(keyword)
-    order = 'relevance'
-    url = "http://gdata.youtube.com/feeds/api/videos?vq=#{CGI.escape(keyword.gsub(/ +/, '+'))}&orderby=#{order}&start-index=1&max-results=25"
-    search_videos_by_url(url)
+  def search_videos(keyword, order='relevance')
+    search_videos_by_url(get_search_url(keyword, order))
+  end
+
+  def get_search_url(keyword, order='relevance')
+    "http://gdata.youtube.com/feeds/api/videos?vq=#{CGI.escape(keyword.gsub(/ +/, '+'))}&orderby=#{order}"
   end
 
   def search_videos_by_url(url)
@@ -136,6 +153,10 @@ class YoutubeLoader
     e.empty? ? nil : e[0].text
   end
 
+  def get_start_index(doc)
+    e = doc.xpath(%{/xmlns:feed/openSearch:startIndex})
+    e.empty? ? nil : e[0].text.to_i
+  end
 end
 
 
