@@ -28,7 +28,13 @@ function onytplayerStateChange(newState) {
 }
 
 function jumpToNextVideo() {
-  location.href = next_url;
+  var repeat = $('#repeat option:selected').val();
+  if (repeat == 1) {
+    location.reload();
+  } else if (repeat == 2) {
+  } else {
+    location.href = next_url;
+  }
 }
 
 if (duration > 0) {
@@ -38,4 +44,8 @@ if (duration > 0) {
   }, duration * 1000 + 10000);
 }
 
+$('#repeat')[0].selectedIndex = $.cookie('repeat');
+$('#repeat').change(function() {
+    $.cookie('repeat', $('#repeat option:selected').val(), {path: '/', expires: 7});
+});
 
