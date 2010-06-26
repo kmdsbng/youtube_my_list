@@ -53,6 +53,11 @@ class MyApp < Sinatra::Base
 
   end
 
+  get '/*.css' do |path|
+    content_type 'text/css'
+    sass path.to_sym, :sass => {:load_paths => [options.views]}
+  end
+
   get '' do
     show_top_page
   end
