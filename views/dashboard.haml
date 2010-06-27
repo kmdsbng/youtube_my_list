@@ -3,6 +3,7 @@
 %html
   %header
     %title #{@account}トップ
+    %link{:href => "css/layout.css", :media => "all", :rel => "stylesheet", :type => "text/css"}
   %body{:style => 'font-size: 30px'}
     .main
       %div.title ■#{h @account}トップ
@@ -11,6 +12,7 @@
           %a{:href => "search_top?account=#{u @account}"} キーワード検索
         %li
           %a{:href => "favorites?account=#{u @account}"} お気に入り
+      %br
       %div 再生リスト
       %ul
         - @entries.each do |e|
