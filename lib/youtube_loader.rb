@@ -61,16 +61,7 @@ class YoutubeLoader
 
   def load_search_video(q, position, order='relevance')
     url = "http://gdata.youtube.com/feeds/api/videos?vq=#{CGI.escape(q.gsub(/ +/, '+'))}&orderby=#{order}&start-index=#{position}&max-results=1"
-    doc = @content_loader.load_xml(url)
-    entry_nodes = doc.xpath(%{//xmlns:entry})
-    title = get_title(doc)
-    videos = convert_to_video_entry(doc, entry_nodes)
-    result = PlaylistVideo.new
-    result.href = videos.empty? ? nil : videos[0].href
-    result.duration = videos.empty? ? nil : videos[0].duration
-    total_node = doc.xpath(%{/xmlns:feed/openSearch:totalResults})
-    result.total = total_node ? total_node.text.to_i : 0
-    result
+    load_video_by_gdata_url(url)
   end
 
   def create_video_list(doc, videos)
@@ -98,6 +89,24 @@ class YoutubeLoader
                 media_content ? media_content.attributes['duration'].text.to_i : 0
       )
     }
+  end
+
+  def load_favorite_video(account, position)
+    url = "http://gdata.youtube.com/feeds/api/users/#{CGI.escape(account)}/favorites?start-index=#{position}&max-results=1"
+    load_video_by_gdata_url(url)
+  end
+
+  def load_video_by_gdata_url(url)
+    doc = @content_loader.load_xml(url)
+    entry_nodes = doc.xpath(%{//xmlns:entry})
+    title = get_title(doc)
+    videos = convert_to_video_entry(doc, entry_nodes)
+    result = PlaylistVideo.new
+    result.href = videos.empty? ? nil : videos[0].href
+    result.duration = videos.empty? ? nil : videos[0].duration
+    total_node = doc.xpath(%{/xmlns:feed/openSearch:totalResults})
+    result.total = total_node ? total_node.text.to_i : 0
+    result
   end
 
   def load_favorites(account)

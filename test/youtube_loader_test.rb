@@ -30,6 +30,13 @@ class YoutubeLoaderTest < Test::Unit::TestCase
   def load_favorites
     YoutubeLoader.new(FavoritesLoaderMock.new).load_favorites('')
   end
+
+  must 'load favorite video' do
+    video = YoutubeLoader.new(FavoriteVideoLoaderMock.new).load_favorite_video('tami0519', 3)
+    assert(!video.href.to_s.empty?)
+    assert_equal(128, video.duration.to_i)
+  end
+
 end
 
 

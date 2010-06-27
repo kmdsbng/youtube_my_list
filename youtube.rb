@@ -147,6 +147,22 @@ class MyApp < Sinatra::Base
     end
   end
 
+  get '/play_favorite' do
+    @account = params[:account]
+    @position = params[:position].to_i
+    @reverse = params[:reverse].to_i == 1
+    loader = YoutubeLoader.new
+    @video = loader.load_favorite_video(@account, @position)
+    @title = '再生'
+    page = ((@position - 1) / 25)
+    @favorite_url = YoutubeLoader.new.get_favorite_url(@q) + "&start-index=#{page * 25 + 1}&max-results=25"
+    if @video.href.to_s.empty?
+      redirect_to_next_playitem_search
+    else
+      haml :play_favorite
+    end
+  end
+
   error do
     require 'pp'
     x = env['sinatra.error']
