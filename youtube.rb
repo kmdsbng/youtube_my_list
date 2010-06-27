@@ -8,12 +8,15 @@ require File.dirname(__FILE__) + '/patch/patch_all'
 require 'ext'
 require 'youtube_loader'
 require 'cgi'
-require 'Sass'
+require 'haml'
+require 'sass'
 
 #Haml::Template.options[:escape_html] = true
 
 class MyApp < Sinatra::Base
   set :haml, :escape_html => true
+  set :public, File.dirname(__FILE__) + '/public'
+  set :static, true
 
   helpers do
     include Rack::Utils
