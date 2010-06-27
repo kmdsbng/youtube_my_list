@@ -8,6 +8,7 @@ require File.dirname(__FILE__) + '/patch/patch_all'
 require 'ext'
 require 'youtube_loader'
 require 'cgi'
+require 'Sass'
 
 #Haml::Template.options[:escape_html] = true
 
