@@ -21,10 +21,12 @@
               %li
                 %a{:href => "?account=#{u @account}&playlist_id=#{u @playlist_id}&position=#{u (@position.to_i + 1).to_s}", :id => "next_url"} 次の動画&gt;
               %li
+                リピート対象
+                %br
                 %select{:id => "repeat"}
-                  %option{:value => 0} リストをリピート
-                  %option{:value => 1} この動画をリピート
-                  %option{:value => 2} リピートしない
+                  %option{:value => 0} 動画リスト
+                  %option{:value => 1} この動画
+                  %option{:value => 2} しない
             != "<input type=\"hidden\" id=\"video_url\" value=\"#{@video.href + '&autoplay=1&ap=%2526fmt%3D18&enablejsapi=1&playerapiid=ytplayer'}\">"
             %input{:type => "hidden", :id => "duration", :value => "#{h @video.duration}"}
 
