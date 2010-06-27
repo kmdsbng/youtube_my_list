@@ -4,7 +4,7 @@ require 'cgi'
 Entry = Struct.new(:title, :href, :content, :updated, :playlist_id)
 VideoEntry = Struct.new(:title, :href, :content, :updated, :thumbnail, :position, :duration)
 VideoListData = Struct.new(:entries, :prev_url, :next_url, :title, :author, :playlist_id, :start_index)
-PlaylistVideo = Struct.new(:href, :total, :duration)
+PlaylistVideo = Struct.new(:href, :total, :duration, :title)
 
 class YoutubeLoader
   def initialize(content_loader=ContentLoader.new)
@@ -47,16 +47,7 @@ class YoutubeLoader
 
   def load_playlist_video(playlist_id, position)
     url = "http://gdata.youtube.com/feeds/api/playlists/#{CGI.escape(playlist_id)}?start-index=#{position}&max-results=1"
-    doc = @content_loader.load_xml(url)
-    entry_nodes = doc.xpath(%{//xmlns:entry})
-    title = get_title(doc)
-    videos = convert_to_video_entry(doc, entry_nodes)
-    result = PlaylistVideo.new
-    result.href = videos.empty? ? nil : videos[0].href
-    result.duration = videos.empty? ? nil : videos[0].duration
-    total_node = doc.xpath(%{/xmlns:feed/openSearch:totalResults})
-    result.total = total_node ? total_node.text.to_i : 0
-    result
+    load_video_by_gdata_url(url)
   end
 
   def load_search_video(q, position, order='relevance')
@@ -106,6 +97,7 @@ class YoutubeLoader
     result.duration = videos.empty? ? nil : videos[0].duration
     total_node = doc.xpath(%{/xmlns:feed/openSearch:totalResults})
     result.total = total_node ? total_node.text.to_i : 0
+    result.title = videos[0].title
     result
   end
 

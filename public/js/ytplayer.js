@@ -10,7 +10,7 @@ var prev_url = prev_url_a.href;
 var duration_input = document.getElementById('duration');
 var duration = duration_input.value;
 swfobject.embedSWF(video_url, 
-                   "ytapiplayer", "560", "365", "8", null, null, params, atts);
+                   "ytapiplayer", "530", "350", "8", null, null, params, atts);
 
 var ytplayer;
 var playerFinishHandled = false;
