@@ -9,29 +9,29 @@
       %div
         %a{:href => "dashboard?account=#{u @account}"} #{h @account}トップに戻る
         %span ||
-        - if @favorites.prev_url
-          %a{:href => "?account=#{@account}&url=#{u @favorites.prev_url}"} &lt;前のページ
-        - if @favorites.next_url
-          %a{:href => "?account=#{@account}&url=#{u @favorites.next_url}"} 次のページ&gt;
+        - if @videos.prev_url
+          %a{:href => "?account=#{@account}&url=#{u @videos.prev_url}"} &lt;前のページ
+        - if @videos.next_url
+          %a{:href => "?account=#{@account}&url=#{u @videos.next_url}"} 次のページ&gt;
       %table
-        - @favorites.entries.each do |f|
+        - @videos.entries.each_with_index do |f, i|
           %tr
             %td
               - if (f.href)
-                %a{:href => "play?account=#{@account}&url=#{u f.href}"}
+                %a{:href => "play_favorite?account=#{@account}&position=#{@videos.start_index.to_i + i}"}
                   %img{:src => f.thumbnail}
             %td
               - if (f.href)
-                %a{:href => "play?account=#{@account}&url=#{u f.href}"} #{h f.title.shorten}
+                %a{:href => "play_favorite?account=#{@account}&position=#{@videos.start_index.to_i + i}"} #{h f.title.shorten}
               - else
                 %span= h f.title.shorten
       %div
         %a{:href => "dashboard?account=#{u @account}"} #{h @account}トップに戻る
         %span ||
-        - if @favorites.prev_url
-          %a{:href => "?account=#{@account}&url=#{u @favorites.prev_url}"} &lt;前のページ
-        - if @favorites.next_url
-          %a{:href => "?account=#{@account}&url=#{u @favorites.next_url}"} 次のページ&gt;
+        - if @videos.prev_url
+          %a{:href => "?account=#{@account}&url=#{u @videos.prev_url}"} &lt;前のページ
+        - if @videos.next_url
+          %a{:href => "?account=#{@account}&url=#{u @videos.next_url}"} 次のページ&gt;
   :javascript
     var _gaq = _gaq || [];
     _gaq.push(['_setAccount', 'UA-1524372-2']);

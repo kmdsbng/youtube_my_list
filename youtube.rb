@@ -81,7 +81,7 @@ class MyApp < Sinatra::Base
     @account = params[:account]
     @url = params[:url]
     loader = YoutubeLoader.new
-    @favorites = @url ? loader.load_favorites_by_url(@url) : loader.load_favorites(@account)
+    @videos = @url ? loader.load_favorites_by_url(@url) : loader.load_favorites(@account)
     haml :favorites
   end
 
