@@ -3,7 +3,8 @@
 %html
   %header
     %title #{@account}のお気に入り
-  %body{:style => 'font-size: 30px'}
+    %link{:href => "css/layout.css", :media => "all", :rel => "stylesheet", :type => "text/css"}
+  %body
     .main
       %div.title ■#{h @account}のお気に入り
       %div

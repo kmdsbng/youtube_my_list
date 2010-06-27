@@ -3,7 +3,8 @@
 %html
   %header
     %title 再生リスト: #{@playlist.title}
-  %body{:style => 'font-size: 30px'}
+    %link{:href => "css/layout.css", :media => "all", :rel => "stylesheet", :type => "text/css"}
+  %body
     .main
       %div ■再生リスト: #{@playlist.title}
       %div
