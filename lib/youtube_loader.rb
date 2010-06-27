@@ -97,7 +97,7 @@ class YoutubeLoader
     result.duration = videos.empty? ? nil : videos[0].duration
     total_node = doc.xpath(%{/xmlns:feed/openSearch:totalResults})
     result.total = total_node ? total_node.text.to_i : 0
-    result.title = videos[0].title
+    result.title = videos.empty? ? nil :  videos[0].title
     result
   end
 
@@ -154,6 +154,9 @@ class YoutubeLoader
   end
 
   def get_playlist_id(doc)
+    STDERR.puts 1
+    return nil unless doc.root.namespaces['xmlns:yt']
+    STDERR.puts 2
     e = doc.xpath(%{/xmlns:feed/yt:playlistId})
     e.empty? ? nil : e[0].text
   end
