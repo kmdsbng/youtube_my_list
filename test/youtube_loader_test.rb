@@ -37,6 +37,10 @@ class YoutubeLoaderTest < Test::Unit::TestCase
     assert_equal(128, video.duration.to_i)
   end
 
+  must 'get favorite url' do
+    expected = "http://gdata.youtube.com/feeds/api/users/hogemoge/favorites"
+    assert_equal(expected, YoutubeLoader.new.get_favorite_url('hogemoge'))
+  end
 end
 
 

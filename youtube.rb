@@ -35,6 +35,11 @@ class MyApp < Sinatra::Base
       redirect "?account=#{u @account}&q=#{u @q}&position=#{u next_position}&reverse=#{@reverse ? 1 : 0}", 302
     end
 
+    def redirect_to_next_playitem_favorite
+      next_position = calc_next_position(@position, @video.total, @reverse)
+      redirect "?account=#{u @account}&position=#{u next_position}&reverse=#{@reverse ? 1 : 0}", 302
+    end
+
     def calc_next_position(position, total, reverse)
       if reverse
         if (posision - 1 < 1)
@@ -155,9 +160,9 @@ class MyApp < Sinatra::Base
     @video = loader.load_favorite_video(@account, @position)
     @title = '再生'
     page = ((@position - 1) / 25)
-    @favorite_url = YoutubeLoader.new.get_favorite_url(@q) + "&start-index=#{page * 25 + 1}&max-results=25"
+    @favorite_url = YoutubeLoader.new.get_favorite_url(@account) + "&start-index=#{page * 25 + 1}&max-results=25"
     if @video.href.to_s.empty?
-      redirect_to_next_playitem_search
+      redirect_to_next_playitem_favorite
     else
       haml :play_favorite
     end
