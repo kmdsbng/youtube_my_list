@@ -30,12 +30,12 @@ class MyApp < Sinatra::Base
     end
 
     def redirect_to_next_playitem
-      next_position = calc_next_position(@position, @playlist_video.total, @reverse)
+      next_position = calc_next_position(@position, @video.total, @reverse)
       redirect "?account=#{u @account}&playlist_id=#{u @playlist_id}&position=#{u next_position}&reverse=#{@reverse ? 1 : 0}", 302
     end
 
     def redirect_to_next_playitem_search
-      next_position = calc_next_position(@position, @search_video.total, @reverse)
+      next_position = calc_next_position(@position, @video.total, @reverse)
       redirect "?account=#{u @account}&q=#{u @q}&position=#{u next_position}&reverse=#{@reverse ? 1 : 0}", 302
     end
 
@@ -128,11 +128,11 @@ class MyApp < Sinatra::Base
     @position = params[:position].to_i
     @reverse = params[:reverse].to_i == 1
     loader = YoutubeLoader.new
-    @playlist_video = loader.load_playlist_video(@playlist_id, @position)
+    @video = loader.load_playlist_video(@playlist_id, @position)
     @title = '再生'
     page = ((@position - 1) / 25)
     @playlist_url = YoutubeLoader.new.get_playlist_url(@playlist_id) + "?start-index=#{page * 25 + 1}&max-results=25"
-    if @playlist_video.href.to_s.empty?
+    if @video.href.to_s.empty?
       redirect_to_next_playitem
     else
       haml :play_playlist
@@ -149,7 +149,7 @@ class MyApp < Sinatra::Base
     @title = '再生'
     page = ((@position - 1) / 25)
     @search_url = YoutubeLoader.new.get_search_url(@q) + "&start-index=#{page * 25 + 1}&max-results=25"
-    if @search_video.href.to_s.empty?
+    if @video.href.to_s.empty?
       redirect_to_next_playitem_search
     else
       haml :play_search
