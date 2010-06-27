@@ -160,7 +160,7 @@ class MyApp < Sinatra::Base
     @video = loader.load_favorite_video(@account, @position)
     @title = '再生'
     page = ((@position - 1) / 25)
-    @favorite_url = YoutubeLoader.new.get_favorite_url(@account) + "&start-index=#{page * 25 + 1}&max-results=25"
+    @favorite_url = YoutubeLoader.new.get_favorite_url(@account) + "?start-index=#{page * 25 + 1}&max-results=25"
     if @video.href.to_s.empty?
       redirect_to_next_playitem_favorite
     else

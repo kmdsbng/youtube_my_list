@@ -8,9 +8,15 @@ require 'pp'
 
 class ContentLoader
   def download_content(url)
-    open(url) {|io|
-      io.read
-    }
+    begin
+      open(url) {|io|
+        io.read
+      }
+    rescue Exception => x
+      x2 = RuntimeError.new("download url failed. url: #{url} (#{x.message})")
+      x2.set_backtrace(x.backtrace)
+      raise x2
+    end
   end
 
   def load_html(url)
