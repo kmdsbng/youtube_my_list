@@ -129,6 +129,10 @@ class YoutubeLoader
     "http://gdata.youtube.com/feeds/api/videos?vq=#{CGI.escape(keyword.gsub(/ +/, '+'))}&orderby=#{order}"
   end
 
+  def get_favorite_url(account)
+    "http://gdata.youtube.com/feeds/api/users/#{CGI.escape(account)}/favorites"
+  end
+
   def search_videos_by_url(url)
     doc = @content_loader.load_xml(url)
     entry_nodes = doc.xpath(%{//xmlns:entry})
