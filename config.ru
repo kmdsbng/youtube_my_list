@@ -1,9 +1,9 @@
-require '/home/kmdsbng/local/lib/rubygems'
-require 'sinatra'
-load File.dirname(__FILE__) + '/index.cgi'
+require 'youtube'
 
 #run Sinatra.new
-run Sinatra.application
+run MyApp
+#MyApp.set(:run => false, :environment => :production)
+#Rack::Handler::CGI.run MyApp
 
 
 
